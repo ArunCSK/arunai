@@ -1,32 +1,64 @@
 """Copilot SDK agent initialization and message handling."""
 import os
 from typing import Dict, Any, Optional, List
-from src.tools import TOOL_DEFINITIONS, call_tool
+from src.tools import TOOL_DEFINITIONS, call_tool, get_tool_handlers
 from src.models import ChatMessage
+
+try:
+    from github_copilot_sdk import CopilotClient
+    COPILOT_SDK_AVAILABLE = True
+except ImportError:
+    COPILOT_SDK_AVAILABLE = False
 
 
 class CopilotAgent:
     """Wrapper around Copilot SDK agent for this application."""
     
-    def __init__(self, model: str = "claude-haiku-4.5"):
+    def __init__(self, model: str = "claude-haiku-4.5", use_sdk: bool = True):
         """
         Initialize Copilot SDK agent with tools and model configuration.
         
         Args:
-            model: Local model name (e.g., "claude-haiku-4.5", "gpt-4o")
+            model: Model name (e.g., "gpt-4.1", "gpt-4o")
+            use_sdk: Whether to use real Copilot SDK (if available)
         """
         self.model = model
         self.tools = TOOL_DEFINITIONS
         self.temperature = float(os.getenv("MODEL_TEMPERATURE", "0.7"))
         self.max_tokens = int(os.getenv("MODEL_MAX_TOKENS", "2048"))
         self.message_history: List[ChatMessage] = []
+        self.copilot_client = None
+        self.session = None
+        self.use_sdk = use_sdk and COPILOT_SDK_AVAILABLE
         
-        # In a real implementation, this would initialize the actual Copilot SDK
-        # For now, we simulate agent behavior
+        # Initialize Copilot SDK if available and requested
+        if self.use_sdk:
+            try:
+                self._initialize_sdk()
+            except Exception as e:
+                print(f"Warning: Failed to initialize Copilot SDK: {e}")
+                print("Using simulation mode instead")
+                self.use_sdk = False
+    
+    def _initialize_sdk(self):
+        """Initialize the Copilot SDK client."""
+        from github_copilot_sdk import CopilotClient
+        
+        # Create SDK client
+        cli_url = os.getenv("COPILOT_CLI_URL", "").strip()
+        
+        if cli_url:
+            # Connect to existing CLI server
+            self.copilot_client = CopilotClient(cliUrl=cli_url)
+        else:
+            # Let SDK manage CLI automatically
+            self.copilot_client = CopilotClient()
     
     def send_message(self, message: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Send a message to the agent and get a response.
+        
+        Uses real Copilot SDK if available and configured, otherwise falls back to simulation.
         
         Args:
             message: User message text
@@ -41,26 +73,73 @@ class CopilotAgent:
                 - tool_calls: List of tool invocations (if any)
                 - model: Model used
                 - usage: Token usage
+                - success: Whether the call succeeded
         """
         if context is None:
             context = {}
         
-        # Prepare system prompt with context
-        system_prompt = self._build_system_prompt(context)
+        # Try to use real SDK if available and configured
+        if self.use_sdk and self.copilot_client:
+            try:
+                return self._send_message_with_sdk(message, context)
+            except Exception as e:
+                print(f"SDK call failed: {e}. Falling back to simulation.")
+                self.use_sdk = False
+                return self._simulate_agent_response(message, context)
         
-        # In real implementation, would call Copilot SDK here:
-        # response = copilot_sdk.chat(
-        #     model=self.model,
-        #     messages=[{"role": "system", "content": system_prompt}, ...],
-        #     tools=self.tools,
-        #     temperature=self.temperature,
-        #     max_tokens=self.max_tokens
-        # )
+        # Fall back to simulation (or if SDK not available)
+        return self._simulate_agent_response(message, context)
+    
+    def _send_message_with_sdk(self, message: str, context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Send message using real Copilot SDK.
         
-        # For now, simulate agent behavior
-        response = self._simulate_agent_response(message, context)
-        
-        return response
+        Makes synchronous HTTP call to Copilot CLI or uses synchronous SDK wrapper.
+        """
+        try:
+            # Build system prompt with context
+            system_prompt = self._build_system_prompt(context)
+            
+            # Format full context message
+            full_message = f"{system_prompt}\n\nUser question: {message}"
+            
+            # Send via SDK with tool definitions
+            # The SDK will handle tool invocation automatically
+            response = self.copilot_client.sendMessage(
+                prompt=full_message,
+                model=self.model,
+                temperature=self.temperature,
+                maxTokens=self.max_tokens,
+                tools=self.tools
+            )
+            
+            # Parse SDK response
+            tool_calls = response.get("toolCalls", []) or []
+            response_text = response.get("content", response.get("message", ""))
+            
+            if not response_text:
+                # Fallback if no content
+                response_text = f"I processed your request about {context.get('selected_company', 'stock prices')}."
+            
+            return {
+                "success": True,
+                "message": response_text,
+                "tool_calls": tool_calls,
+                "model": self.model,
+                "usage": {
+                    "input_tokens": len(message.split()),
+                    "output_tokens": len(response_text.split())
+                }
+            }
+        except Exception as e:
+            # If SDK call fails, fall back gracefully
+            return {
+                "success": False,
+                "message": f"Agent communication error: {str(e)}. Using fallback response.",
+                "tool_calls": [],
+                "model": self.model,
+                "usage": {"input_tokens": 0, "output_tokens": 0}
+            }
     
     def _build_system_prompt(self, context: Dict[str, Any]) -> str:
         """Build system prompt with context information."""

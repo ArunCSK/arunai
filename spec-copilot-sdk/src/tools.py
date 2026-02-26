@@ -202,3 +202,16 @@ def call_tool(tool_name: str, **kwargs) -> Dict[str, Any]:
             "success": False,
             "error": f"Unknown tool: {tool_name}"
         }
+
+
+def get_tool_handlers() -> Dict[str, callable]:
+    """
+    Get mapping of tool names to their handler functions.
+    
+    Returns:
+        Dict mapping tool names to handler functions
+    """
+    return {
+        "get_stock_data": get_stock_data_handler,
+        "analyze_stock_data": analyze_stock_data_handler
+    }
