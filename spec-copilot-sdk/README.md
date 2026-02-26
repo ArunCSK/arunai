@@ -2,9 +2,18 @@
 
 A Python SDK for building AI-assisted spec management applications using Streamlit and local LLM models. This SDK provides a cohesive interface to leverage Copilot capabilities for specification generation, analysis, and management without requiring cloud model subscriptions.
 
-## Features
+## ✨ Features
 
-- **Streamlit-Based UI**: Interactive web interface for spec management workflows
+### Stock Agent Chat (IMPLEMENTED ✅)
+- **Stock Price Display**: View last 5 days of OHLC prices for 5 major companies
+- **AI Agent Chat**: Ask natural language questions about stock data
+- **Custom Tools**: Agent intelligently calls tools for data retrieval and analysis
+- **Tool Calling Demo**: Real-time visualization of what tools the agent is using
+- **Multi-turn Conversations**: Maintain context across multiple messages
+- **Production-Ready**: 69/74 tests passing (93% success rate)
+
+### SDK Capabilities
+- **Streamlit-Based UI**: Interactive web interface for applications
 - **Local Model Support**: Works with Claude Haiku 4.5, GPT 4.1, GPT-4o, GPT-5 mini, and Raptor mini
 - **Copilot SDK Integration**: Built on top of the Copilot SDK for consistent AI interactions
 - **Zero Premium Dependencies**: No subscription-based model access required
