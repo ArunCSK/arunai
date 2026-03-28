@@ -1,0 +1,17 @@
+{
+  "name": "rag-cli",
+  "version": "1.0.0",
+  "description": "Problem 6 — RAG CLI: consume embedding + HF inference microservices",
+  "type": "module",
+  "bin": {
+    "rag": "./bin/rag.js"
+  },
+  "scripts": {
+    "start": "node bin/rag.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "chalk": "^5.3.0",
+    "ora": "^8.0.1"
+  }
+}
