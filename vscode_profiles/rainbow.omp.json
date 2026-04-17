@@ -1,0 +1,112 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "background": "#43BC07",
+          "foreground": "#ffffff",
+          "leading_diamond": "\ue0b6",
+          "style": "diamond",
+          "template": " {{ if .WSL }}WSL \ue712 {{ else }}{{ .Icon }}{{ end }} ",
+          "type": "os",
+          "properties": {
+            "windows": "\ue70f",
+            "linux": "\ue712",
+            "macos": "\ue711"
+          }
+        },
+        {
+          "background": "#5FBFFF",
+          "foreground": "#111111",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "style": "full"
+          },
+          "style": "powerline",
+          "template": " \uf07b {{ .Location }} ",
+          "type": "path"
+        },
+        {
+          "background": "#FFFF5F",
+          "background_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#FF5F5F{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FF5FFF{{ end }}"
+          ],
+          "foreground": "#111111",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "branch_icon": "\ue725 ",
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "style": "powerline",
+          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }} ",
+          "type": "git"
+        },
+        {
+          "background": "#5FFF5F",
+          "foreground": "#111111",
+          "powerline_symbol": "\ue0b0",
+          "style": "powerline",
+          "template": " \ueba2 {{ .FormattedMs }} ",
+          "trailing_diamond": "\ue0b4",
+          "type": "executiontime"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "background": "#00ACC1",
+          "foreground": "#ffffff",
+          "leading_diamond": "\ue0b6",
+          "properties": {
+            "display_mode": "environment"
+          },
+          "style": "diamond",
+          "template": " \ue235 {{ if .Venv }}{{ .Venv }}{{ end }} ",
+          "type": "python"
+        },
+        {
+          "background": "#FF5FFF",
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b2",
+          "invert_powerline": true,
+          "style": "powerline",
+          "template": " {{ if gt .Code 0 }}\uf00d {{ reason .Code }}{{ else }}\uf00c{{ end }} ",
+          "type": "status"
+        },
+        {
+          "background": "#FFAF5F",
+          "foreground": "#111111",
+          "powerline_symbol": "\ue0b2",
+          "invert_powerline": true,
+          "style": "powerline",
+          "template": " \uf017 {{ .CurrentDate | date \"Mon 15:04\" }} ",
+          "trailing_diamond": "\ue0b4",
+          "type": "time"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#43BC07",
+          "style": "plain",
+          "template": "\u27a4 ",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 4
+}
