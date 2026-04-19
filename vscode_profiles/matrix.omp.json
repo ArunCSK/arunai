@@ -1,0 +1,96 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 3,
+  "final_space": true,
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "os",
+          "style": "diamond",
+          "background": "#001a00",
+          "foreground": "#00ff00",
+          "template": "{{ .Icon }} ",
+          "properties": {}
+        },
+        {
+          "type": "path",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "background": "#002b00",
+          "foreground": "#00ff00",
+          "template": " {{ .Path }} ",
+          "properties": {
+            "style": "full"
+          }
+        },
+        {
+          "type": "git",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "background": "#003d00",
+          "foreground": "#00ff00",
+          "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }} ",
+          "properties": {
+            "fetch_status": true
+          }
+        },
+        {
+          "type": "executiontime",
+          "style": "diamond",
+          "trailing_diamond": "\ue0b0",
+          "background": "#004d00",
+          "foreground": "#00ff00",
+          "template": " {{ .FormattedMs }} ",
+          "properties": {
+            "threshold": 500,
+            "style": "roundrock"
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "time",
+          "style": "diamond",
+          "leading_diamond": "\ue0b2",
+          "background": "#001a00",
+          "foreground": "#00ff00",
+          "template": " <#00ff00,B>{{ .CurrentDate | date \"Mon\" | upper }}</> <#00ff00>{{ .CurrentDate | date \"15:04:05\" }}</> ",
+          "properties": {}
+        },
+        {
+          "type": "python",
+          "style": "diamond",
+          "leading_diamond": "\ue0b2",
+          "background": "#003d00",
+          "foreground": "#00ff00",
+          "template": " \ue235 {{ .Venv }} ",
+          "properties": {
+            "display_mode": "environment",
+            "home_enabled": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#00ff00",
+          "template": "<#00ff00,B>\u27a4</> ",
+          "properties": {}
+        }
+      ]
+    }
+  ]
+}
