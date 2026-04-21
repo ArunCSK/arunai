@@ -1,0 +1,37 @@
+# Core Agent & LLM Frameworks
+claude-agent-sdk
+litellm[proxy]
+mcp
+
+# Essential Server & Async Dependencies
+fastapi
+uvicorn
+starlette
+anyio
+websockets
+apscheduler
+backoff
+python-dotenv
+
+# Networking & HTTP Clients
+httpx
+aiohttp
+requests
+python-multipart
+
+# Serialization & Data handling
+orjson
+pydantic
+jsonschema
+pyyaml
+
+# Provider Specific (For Gemini support)
+google-genai
+google-cloud-aiplatform
+
+# Performance & Utilities
+uvloop; sys_platform != 'win32'
+cryptography
+PyJWT[crypto]
+click
+rich
