@@ -1,0 +1,33 @@
+﻿# google-adk Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2026-04-22
+
+## Active Technologies
+- Python 3.11 + litellm, duckduckgo-search, ackoff, python-dotenv (001-rag-internet-search)
+- In-memory session context (001-rag-internet-search)
+
+- [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION] + [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION] (001-rag-internet-search)
+
+## Project Structure
+
+```text
+backend/
+frontend/
+tests/
+```
+
+## Commands
+
+cd src; pytest; ruff check .
+
+## Code Style
+
+[e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]: Follow standard conventions
+
+## Recent Changes
+- 001-rag-internet-search: Added Python 3.11 + litellm, duckduckgo-search, ackoff, python-dotenv
+
+- 001-rag-internet-search: Added [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION] + [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->
