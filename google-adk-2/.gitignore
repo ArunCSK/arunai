@@ -1,0 +1,5 @@
+adk2-venv/
+.env.example
+.env
+node_modules/
+__pycache__ 
