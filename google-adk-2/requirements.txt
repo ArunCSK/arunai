@@ -1,0 +1,19 @@
+# ─── Google ADK 2.0 ───────────────────────────────────────────────────────────
+google-adk>=1.0.0
+
+# ─── Gemini / Google GenAI ────────────────────────────────────────────────────
+google-generativeai>=0.8.0
+
+# ─── RAG: Embeddings + Vector Store ──────────────────────────────────────────
+sentence-transformers>=3.0.0        # local embedding model (no API key needed)
+faiss-cpu>=1.8.0                    # in-memory vector index
+
+# ─── Document parsing ─────────────────────────────────────────────────────────
+pypdf>=4.0.0                        # PDF ingestion
+tiktoken>=0.7.0                     # token counting / chunking helper
+
+# ─── Utilities ────────────────────────────────────────────────────────────────
+python-dotenv>=1.0.0                # load .env files
+numpy>=1.26.0                       # required by faiss + sentence-transformers
+uvicorn[standard]>=0.29.0           # ASGI server used by `adk api_server`
+fastapi>=0.111.0                    # ADK api_server dependency

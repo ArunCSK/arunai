@@ -1,0 +1,12 @@
+[
+  { "id": 1, "text": "Machine learning is a subset of AI that enables systems to learn from data without being explicitly programmed." },
+  { "id": 2, "text": "PyTorch is a deep learning framework developed by Facebook AI Research, popular for research and production." },
+  { "id": 3, "text": "Transformers use self-attention mechanisms to process sequential data in parallel, enabling models like BERT and GPT." },
+  { "id": 4, "text": "RAG stands for Retrieval-Augmented Generation — it combines a retrieval step with a generative language model." },
+  { "id": 5, "text": "Scikit-learn provides consistent APIs for classification, regression, clustering, and preprocessing." },
+  { "id": 6, "text": "Sentence transformers create dense vector embeddings of text using pre-trained transformer models." },
+  { "id": 7, "text": "Neural networks learn hierarchical representations from data through layers of weighted connections." },
+  { "id": 8, "text": "Gradient descent is an iterative optimisation algorithm used to minimise a loss function in ML models." },
+  { "id": 9, "text": "Cross-entropy loss measures how different the predicted probability distribution is from the ground truth." },
+  { "id": 10, "text": "JPMorgan Chase uses AI for fraud detection, algorithmic trading, customer service, and credit risk assessment." }
+]
