@@ -1,0 +1,1 @@
+Summary: A file named 'project_description.txt' was created with a placeholder project description.

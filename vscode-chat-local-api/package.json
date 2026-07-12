@@ -1,0 +1,78 @@
+{
+  "name": "vscode-chat-local-api",
+  "displayName": "VS Code Chat Local API",
+  "description": "Expose a local HTTP chat API that the extension can answer (toggleable via status bar).",
+  "version": "0.0.2",
+  "publisher": "arunai",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:vscodeChatLocalApi.toggleServer",
+    "onCommand:vscodeChatLocalApi.refreshStatus",
+    "onView:chatLocalApiStatus"
+  ],
+  "main": "extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "chatLocalApiView",
+          "title": "Chat API",
+          "icon": "$(radio-tower)"
+        }
+      ]
+    },
+    "views": {
+      "chatLocalApiView": [
+        {
+          "id": "chatLocalApiStatus",
+          "name": "Chat Local API"
+        }
+      ]
+    },
+    "chatParticipants": [
+      {
+        "id": "chatLocalApi.participant",
+        "label": "Chat Local API Participant",
+        "description": "Handle chat requests from the Chat view (also routed from local HTTP API)."
+      }
+    ],
+    "commands": [
+      {
+        "command": "vscodeChatLocalApi.toggleServer",
+        "title": "Toggle Chat Local API Server",
+        "category": "Chat Local API",
+        "icon": "$(play)"
+      },
+      {
+        "command": "vscodeChatLocalApi.refreshStatus",
+        "title": "Refresh Status",
+        "category": "Chat Local API",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "vscodeChatLocalApi.toggleServer",
+          "group": "navigation",
+          "when": "view == chatLocalApiStatus"
+        },
+        {
+          "command": "vscodeChatLocalApi.refreshStatus",
+          "group": "navigation",
+          "when": "view == chatLocalApiStatus"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "prepublish": "",
+    "test": "echo \"No tests configured\""
+  },
+  "dependencies": {}
+}
